@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24Dakka - Beta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            left: -150px;
+            bottom: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: url('burj.png');
+            background-size: auto 110%;
+            background-repeat: no-repeat;
+            background-position: left bottom;
+            opacity: 0.25;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .logo {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b00, #ff9500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 107, 0, 0.3);
+        }
+
+        .beta-badge {
+            display: inline-block;
+            background: rgba(255, 107, 0, 0.2);
+            border: 2px solid #ff6b00;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            color: #ff9500;
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        section {
+            background: rgba(255, 107, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 107, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ff9500;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            opacity: 0.95;
+            text-align: center;
+        }
+
+        .video-coming {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .video-coming svg {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            opacity: 0.7;
+            color: #ff6b00;
+        }
+
+        .video-coming h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ff9500;
+        }
+
+        .about-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff6b00, #ff9500);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .about-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 107, 0, 0.6);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            margin: 10% auto;
+            padding: 40px;
+            border: 2px solid #ff6b00;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 50px rgba(255, 107, 0, 0.3);
+            animation: slideDown 0.3s ease;
+        }
+
+        .close {
+            color: #ff6b00;
+            float: right;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff9500;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            opacity: 0.6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5em;
+            }
+
+            section {
+                padding: 25px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .modal-content {
+                margin: 20% auto;
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">24Dakka</div>
+            <span class="beta-badge">BETA</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <h2>🎬 İlk Video</h2>
+            <div style="text-align: center;">
+                <video controls style="width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 8px 30px rgba(255, 107, 0, 0.4);">
+                    <source src="24Dakka.mp4" type="video/mp4">
+                    Tarayıcınız video oynatmayı desteklemiyor.
+                </video>
+            </div>
+        </section>
+
+        <button class="about-btn" onclick="openModal()">Hakkımızda</button>
+    </main>
+
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Hakkımızda</h2>
+            <p>24Dakka, size en iyi içerikleri sunmak için kuruldu. Şu anda beta aşamasındayız ve platformumuzu sizin için hazırlıyoruz. Çok yakında birbirinden güzel videolar ve içeriklerle burada olacağız. Bizi takip etmeye devam edin!</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 24Dakka - Beta Sürümü</p>
+        </div>
+    </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById('aboutModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('aboutModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('aboutModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
