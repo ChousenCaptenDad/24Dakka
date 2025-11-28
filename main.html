@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24 Dakka - Video Platformu</title>
+    <meta name="description" content="Modern video yükleme ve paylaşım platformu">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <!-- Background Images -->
+    <div class="background-images">
+        <img src="burj2.png" alt="" class="bg-left">
+        <img src="burj.png" alt="" class="bg-right">
+    </div>
+
+    <!-- Logo and Profile (Fixed positions) -->
+    <div class="logo-fixed">24 Dakka</div>
+    <button class="profile-btn-fixed" id="profileBtn">Profil</button>
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Leaderboard Section -->
+        <section class="leaderboard-section">
+            <div class="leaderboard-header">
+                <h1 class="leaderboard-title">⭐ Yıldızlar</h1>
+            </div>
+            <div class="leaderboard-container">
+                <div class="leaderboard-grid" id="leaderboardGrid">
+                    <!-- User cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Videos Section -->
+        <section class="videos-section">
+            <div class="videos-grid" id="videosGrid">
+                <!-- Upload card (always first) -->
+                <div class="upload-card" id="uploadCard">
+                    <div class="upload-icon">📤</div>
+                    <div class="upload-text">Video/Görsel Yükle</div>
+                    <div class="upload-hint">Tüm video ve görsel formatları desteklenir</div>
+                </div>
+                <!-- Video cards will be inserted here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="authTitle">Giriş Yap</h2>
+                <button class="close-btn" id="closeAuthModal">&times;</button>
+            </div>
+            <form id="authForm">
+                <div class="form-group">
+                    <label class="form-label" for="authEmail">E-posta</label>
+                    <input type="email" id="authEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="authPassword">Şifre</label>
+                    <input type="password" id="authPassword" class="form-input" required>
+                </div>
+                <div class="form-group" id="usernameGroup" style="display: none;">
+                    <label class="form-label" for="authUsername">Kullanıcı Adı</label>
+                    <input type="text" id="authUsername" class="form-input">
+                </div>
+                <button type="submit" class="btn-primary" id="authSubmitBtn">Giriş Yap</button>
+                <p class="text-center mt-md">
+                    <a href="#" id="toggleAuth" style="color: var(--orange-light); text-decoration: none;">Hesabın yok
+                        mu? Kayıt ol</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Video/Görsel Yükle</h2>
+                <button class="close-btn" id="closeUploadModal">&times;</button>
+            </div>
+
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label class="form-label">Başlık</label>
+                    <input type="text" id="videoTitle" class="form-input" required placeholder="Video/görsel başlığı">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Açıklama</label>
+                    <textarea id="videoDescription" class="form-textarea" placeholder="Açıklama (opsiyonel)"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Dosya Seç (Video veya Görsel)</label>
+                    <input type="file" id="videoFile" class="form-input" accept="video/*,image/*" required>
+                    <p id="selectedFileName" style="margin-top: 0.5rem; color: var(--orange-light); font-size: 0.9rem;">
+                        Dosya seçilmedi</p>
+                </div>
+
+                <button type="submit" class="btn-primary" id="uploadSubmitBtn">Yükle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Video Player Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h2 class="modal-title" id="videoModalTitle">Video</h2>
+                <button class="close-btn" id="closeVideoModal">&times;</button>
+            </div>
+            <video id="videoPlayer" controls
+                style="width: 100%; border-radius: var(--radius-md); margin-bottom: var(--spacing-md);"></video>
+            <div id="videoModalInfo" style="color: rgba(255, 255, 255, 0.7);"></div>
+        </div>
+    </div>
+
+    <!-- Comments Sidebar -->
+    <div class="comments-sidebar" id="commentsSidebar">
+        <div class="comments-header">
+            <h3 class="comments-title" id="commentsVideoTitle">Yorumlar</h3>
+            <button class="close-comments-btn" id="closeComments">&times;</button>
+        </div>
+        <div class="comments-content">
+            <div class="comments-list" id="commentsList">
+                <!-- Comments will be inserted here -->
+            </div>
+            <div class="comment-input-section">
+                <input type="text" class="comment-input" id="commentInput" placeholder="Yorum yaz...">
+                <button class="send-comment-btn" id="sendCommentBtn">Gönder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Config -->
+    <script src="config.js"></script>
+
+    <!-- App -->
+    <script src="app.js"></script>
+</body>
+
+</html>
