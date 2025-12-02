@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24 Dakka - Giriş</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange-primary: #ff6b35;
+            --orange-secondary: #ff8c42;
+            --orange-light: #ffa566;
+            --orange-glow: rgba(255, 107, 53, 0.3);
+            --black-primary: #0a0a0a;
+            --black-secondary: #1a1a1a;
+            --glass-bg: rgba(26, 26, 26, 0.7);
+            --glass-border: rgba(255, 107, 53, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--black-primary);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Images */
+        .bg-left {
+            position: absolute;
+            left: -250px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 850px;
+            height: auto;
+            opacity: 0.15;
+            filter: blur(1px);
+            z-index: 0;
+        }
+
+        .bg-right {
+            position: absolute;
+            right: -140px;
+            bottom: -5%;
+            width: 380px;
+            height: auto;
+            opacity: 0.15;
+            filter: blur(1px);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px var(--orange-glow);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .password-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.3s ease;
+        }
+
+        .password-box:hover {
+            border-color: var(--orange-primary);
+            box-shadow: 0 8px 32px 0 var(--orange-glow);
+        }
+
+        .password-label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--orange-light);
+            font-size: 1rem;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(42, 42, 42, 0.6);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 0.3rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--orange-primary);
+            box-shadow: 0 0 0 3px var(--orange-glow);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--orange-glow);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--orange-glow);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #ff4444;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.show {
+            opacity: 1;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        .shake {
+            animation: shake 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Images -->
+    <img src="burj2.png" alt="" class="bg-left">
+    <img src="burj.png" alt="" class="bg-right">
+
+    <div class="container">
+        <h1 class="logo">24 Dakka</h1>
+        <p class="subtitle">Video Platformu</p>
+
+        <div class="password-box">
+            <label class="password-label">Şifre Girin</label>
+            <input type="password" id="passwordInput" class="password-input" placeholder="••••••" autocomplete="off">
+            <button class="submit-btn" id="submitBtn">Giriş Yap</button>
+            <p class="error-message" id="errorMessage">❌ Yanlış şifre!</p>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = 'ibams';
+        const passwordInput = document.getElementById('passwordInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const passwordBox = document.querySelector('.password-box');
+
+        // Enter tuşu ile giriş
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // Butona tıklama
+        submitBtn.addEventListener('click', checkPassword);
+
+        function checkPassword() {
+            const enteredPassword = passwordInput.value;
+
+            if (enteredPassword === correctPassword) {
+                // Doğru şifre - ana sayfaya yönlendir
+                window.location.href = 'main.html';
+            } else {
+                // Yanlış şifre - hata göster
+                errorMessage.classList.add('show');
+                passwordBox.classList.add('shake');
+                passwordInput.value = '';
+                passwordInput.focus();
+
+                // Animasyonu kaldır
+                setTimeout(() => {
+                    passwordBox.classList.remove('shake');
+                }, 300);
+
+                // Hata mesajını gizle
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                }, 2000);
+            }
+        }
+
+        // Sayfa yüklendiğinde input'a focus
+        window.addEventListener('load', () => {
+            passwordInput.focus();
+        });
+    </script>
+</body>
+
+</html>
